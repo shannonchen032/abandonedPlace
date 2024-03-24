@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Bleeding Image Animation</title>
+    <style>
+    </style>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+  </head>
+
+  <body>
+    <script>
+
+      let trees = [];
+
+      function setup() {
+        createCanvas(windowWidth, windowHeight, WEBGL);
+        
+        // Generate a grid of trees
+        for (let x = -300; x <= 300; x += 100) {
+          for (let z = -300; z <= 300; z += 100) {
+            let tree = new Tree(x, z, random(50, 80));
+            trees.push(tree);
+          }
+        }
+      }
+
+      function draw() {
+        background(135, 206, 235); // Set the background color to a light blue
+        
+        // Draw each tree in the array
+        for (let i = 0; i < trees.length; i++) {
+          trees[i].display();
+        }
+      }
+
+      class Tree {
+        constructor(x, z, size) {
+          this.x = x;
+          this.z = z;
+          this.size = size;
+        }
+        
+        display() {
+          push();
+          translate(this.x, 0, this.z);
+          fill(34, 139, 34);
+          cylinder(this.size/5, this.size*2);
+          translate(0, -this.size*2, 0);
+          fill(0, 255, 0);
+          sphere(this.size);
+          pop();
+        }
+      }
+    </script>
+  </body>
+</html>

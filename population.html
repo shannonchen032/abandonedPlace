@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Bleeding Image Animation</title>
+    <style>
+        html{
+          overflow-y: hidden;
+          overflow-y: hidden;
+          background-color: black;
+        }
+
+        .decreaseButton {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #ffffff;
+            margin-top: 20px;
+        }
+        
+        .buttonImage {
+            width: 22%;
+            opacity: .8;
+            filter: drop-shadow(3px rgba(255, 255, 255, 0.469));
+        }
+        
+        .buttonText {
+            position: relative;
+            margin-left: -16%;
+            font-family: Millweemanuscripting !important;
+            text-shadow: 2px 2px #0a0a0a !important;
+            font-size: 2em !important;
+            color: white;
+        }
+
+        .decreaseButton:hover {
+            transform: translate(2px, 2px) !important;
+            cursor: pointer;
+        }
+
+        #typewriter{
+            font-family: Millweemanuscripting !important;
+            font-size: 2em;
+            padding-bottom: 40% !important;
+        }
+
+        a{
+            text-decoration: none !important;
+            color: white;
+            font-family: Millweemanuscripting !important;
+            font-size: .8em;
+        }
+
+/* 
+        p{
+            font-family: Millweemanuscripting !important;
+            text-shadow: 2px 2px #0a0a0a !important;
+            font-size: 2em !important;
+            color: white;
+        } */
+
+    </style>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+
+        
+  </head>
+
+  <body>
+    <script>
+            let img;
+            let terrain = [];
+            let angle = 0;
+            let previousMouseX = 0;
+            let numTerrains = 20;
+
+            function preload() {
+            // Load a texture image
+            img = loadImage('./images/test.png');
+            }
+
+            function setup() {
+            // Set canvas size and create 2D Perlin noise array
+            createCanvas(windowWidth, windowHeight, WEBGL);
+            for (let x = 0; x < numTerrains; x++) {
+                terrain[x] = [];
+                for (let y = 0; y < numTerrains; y++) {
+                terrain[x][y] = map(noise(x * 0.2, y * 1), 0, 1, -1000, 300);
+                }
+            }
+            }
+
+            function draw() {
+            // Set up lighting and camera position
+            background(0);
+            directionalLight(255, 255, 255, 0, 1, -1);
+            ambientLight(200, 200, 200);
+            camera(0, -200, 400, 0, 0, 0, 0, 1, 0);
+
+            // Move the island map up and down with arrow keys
+            if (keyIsDown(UP_ARROW)) {
+                translate(0, 0, 10);
+            }
+            if (keyIsDown(DOWN_ARROW)) {
+                translate(0, 0, -10);
+            }
+
+            // Draw the island using the texture image
+            translate(-150, -150);
+            for (let x = 0; x < numTerrains; x++) {
+                for (let y = 0; y < numTerrains; y++) {
+                let h = terrain[x][y];
+                push();
+                translate(x * 20, y * 20, h);
+                texture(img);
+                box(20, 20, 20);
+                pop();
+                }
+            }
+            }
+
+            function decreaseTerrains() {
+            if (numTerrains > 1) {
+                numTerrains--;
+                setup();
+                clear();
+            } else if (numTerrains === 1) {
+                document.querySelector('.buttonText').textContent = '...AND, THEN?';
+                document.querySelector('.decreaseButton').onclick = function() {
+                // Remove button and show new image
+                document.querySelector('.decreaseButton').style.display = 'none';
+                let img2 = document.createElement('img');
+                img2.src = './images/enterMe.gif';
+                img2.style.position = 'absolute';
+                img2.style.width = '30%';
+                img2.style.top = '50%';
+                img2.style.left = '50%';
+                img2.style.transform = 'translate(-50%, -50%)';
+                document.body.appendChild(img2);
+
+                // Typewriter effect for "where to?" text
+                if (!document.querySelector('#typewriter')) {
+                    let typewriter = document.createElement('div');
+                    typewriter.id = 'typewriter';
+                    typewriter.style.position = 'fixed';
+                    typewriter.style.bottom = '10px';
+                    typewriter.style.left = '50%';
+                    typewriter.style.transform = 'translateX(-50%)';
+                    typewriter.style.fontSize = '24px';
+                    typewriter.style.color = '#fff';
+                    typewriter.style.fontFamily = 'monospace';
+                    document.body.appendChild(typewriter);
+
+                    let text = "take me here";
+                    let i = 0;
+                    let speed = 100; // Adjust typing speed here (lower number = faster)
+                    let typing = setInterval(function() {
+                    document.querySelector('#typewriter').textContent += text.charAt(i);
+                    i++;
+                    if (i > text.length - 1) {
+                        clearInterval(typing);
+                        // Add your code to handle the link click here
+                        document.querySelector('#typewriter').innerHTML += '<a href="./transition.html">&nbsp;▶</a>';
+                    }
+                    }, speed);
+                }
+                };
+            }
+            }
+    </script>
+        <!-- <div> -->
+        <button class="decreaseButton" onclick="decreaseTerrains()">
+            <img src="./images/enterButton.png" alt="Enter" class="buttonImage">
+            <span class="buttonText"><p>WHAT HAPPENED?</p></span>
+        </button>
+        <!-- </div> -->
+        
+  </body>
+</html>

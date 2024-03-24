@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+    <title>Abstract Cityscape</title>
+      <style>
+        html{
+          overflow-y: hidden;
+          overflow-y: hidden;
+          background: #d5d2d0;
+          margin-top: -5%;
+          margin-left: -1%;
+          box-shadow: 0 0 200px rgba(0,0,0,0.9) inset !important;
+        }
+
+        #typewriter {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            /* transform: translate(70%, 120%); */
+            font-family: Millweemanuscripting;
+            font-size: 2em;
+            font-weight: bolder;
+            white-space: nowrap;
+            margin-top: 10%;
+            margin-left: -50%;
+            font-weight: bolder extra-condensed;
+            font-style:italic;
+            z-index: 100;
+            color: black;
+            text-shadow: 1px 1px 1px #e4ee6f;
+        }
+
+        .topImage {
+            width: 50% !important;
+            position:absolute;
+            filter:drop-shadow(3px 3px 0px rgba(69, 69, 69, 0.354));      
+            margin-left: 30% !important; 
+            margin-top: 3%;
+        }
+
+        .decreaseButton {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #ffffff;
+            margin-bottom: -20%;
+            z-index: 100  !important;
+        }
+        
+
+        .buttonImage {
+            width: 12%;
+            opacity: 1;
+            z-index: 100  !important;
+            filter:drop-shadow(3px 3px 5px #e4ee6f);     
+        }
+        
+        .decreaseButton:hover {
+            transform: translate(2px, 2px) !important;
+            cursor: pointer !important;
+        }
+
+        .rightImage {
+            height: 100%;
+            position:absolute;
+            filter:drop-shadow(3px 3px 5px rgba(69, 69, 69, 0.354));      
+        }
+
+
+        a{
+            text-decoration: none !important;
+            color: white !important;
+        }
+
+      </style>
+    </head>
+
+  <body>
+    <canvas id="background"></canvas>
+    <div id="typewriter">
+    </div>
+
+    <img src="./images/hello.png" class="topImage"
+    style="width: 60% !important; margin-left:-22% !important;   transform: scaleX(-1);
+    margin-bottom: - 30% !important;">
+
+    <img src="./images/hello.png" class="topImage"
+    style="margin-left:65%; margin-bottom: - 30% !important;">
+
+    <button class="decreaseButton">
+        <a href="./cityBirdsEye.html"><img src="./images/lookCloser.png" alt="Enter" class="buttonImage"
+          style="margin-left: -85%;"></a>
+    </button>
+
+    <button class="decreaseButton">
+      <a href="./transitionTwo.html"><img src="./images/seenEnoughBlue.png" alt="Enter" class="buttonImage"
+        style="margin-left: 85%; margin-top: 10%; filter:drop-shadow(3px 3px 5px #4fb5e7);"></a>
+  </button>
+
+    <div class="rightContainer">
+      <img src="./images/right.png" class="rightImage" 
+      style="margin-left:95%; margin-top: 10%; z-index: 10;">
+    </div>
+
+    <div class="leftContainer">
+      <img src="./images/left.png" class="rightImage" 
+      style="margin-left:0%; margin-top: 20%; z-index: 10;">
+  </div>
+
+    <script>     
+        // Set up the typewriter effect
+        let text = "i am THE HORIZON try LINING UP WITH ME i am THE HORIZON try LINING UP WITH ME i am THE HORIZON try LINING UP WITH ME i am THE HORIZON try LINING UP WITH ME";
+        let index = 0;
+        let typewriter = document.getElementById("typewriter");
+        typewriter.innerText = "_";
+        
+        let timer = setInterval(() => {
+            if (index >= text.length) {
+                clearInterval(timer);
+                typewriter.innerText = text;
+            } else {
+                typewriter.innerText = text.slice(0, index) + "_";
+                index++;
+            }
+        }, 100);      
+        
+      let buildings = [];
+      let angle = 0;
+      let isMousePressed = false;
+
+      function setup() {
+        createCanvas(windowWidth, windowHeight , WEBGL);
+        background(213,210,208);
+        noStroke();
+
+        // Generate the initial buildings
+        for (let i = 0; i < 20; i++) {
+              let r, g, b, c;
+          let colors = [    
+            [255, 100, 80], // muted neon orange
+            [255, 109, 89], // muted neon pink
+            [247, 225, 120], // muted neon yellow   
+          ];
+          let randomColor = colors[floor(random(0, colors.length))];
+          r = random(randomColor[0] - 20, randomColor[0] + 20);
+          g = random(randomColor[1] - 20, randomColor[1] + 20);
+          b = random(randomColor[2] - 20, randomColor[2] + 20);
+          c = color(r, g, b);
+          buildings.push(new Building(random(-width / 3, width / 7), 
+          random(-height / 3, height / 5), random(10, 20), random(20, 40), c));
+        }
+          
+      }
+
+      function draw() {
+
+        // Rotate the scene based on the mouse position
+        if (!isMousePressed) {
+          rotateY(map(mouseX, 0, width, -PI, PI));
+          rotateX(map(mouseY, 0, height, -PI, PI));
+        }
+
+        // Draw the buildings
+        for (let i = 0; i < buildings.length; i++) {
+          buildings[i].grow();
+          buildings[i].display(i === buildings.length - 1);
+        }
+
+        // Add a new building every 60 frames
+      if (frameCount % 100 === 0) {
+      let r, g, b, c;
+          let colors = [
+            // [69, 207, 161], // muted neon green
+            [87, 187, 219], // muted neon blue
+            [255, 100, 80], // muted neon orange
+            [247, 225, 120], // muted neon yellow   
+            // [161, 149, 224] // muted neon purple
+          ];
+          let randomColor = colors[floor(random(0, colors.length))];
+          r = random(randomColor[0] - 20, randomColor[0] + 20);
+          g = random(randomColor[1] - 20, randomColor[1] + 20);
+          b = random(randomColor[2] - 20, randomColor[2] + 20);
+          c = color(r, g, b);
+          buildings.push(new Building(random(-width, width / 2), random(-height, height / 2), 
+          random(10, 90), random(10, 20), c));
+        }
+      }
+
+      function mousePressed() {
+        isMousePressed = true;
+      }
+
+      function mouseReleased() {
+        isMousePressed = false;
+      }
+
+      class Building {
+        constructor(x, y, w, h, c) {
+          this.pos = createVector(x, y);
+          this.width = w;
+          this.height = h;
+          this.color = c;
+          this.growthRate = random(0, 0.05);
+        }
+
+        grow() {
+          this.height += this.growthRate;
+          this.width += this.growthRate;
+        }
+
+        display(isTopLayer) {
+          push();
+          translate(this.pos.x, this.pos.y, this.height / 2);
+          if (isTopLayer) {
+            fill(this.color);
+          } else {
+            noFill();
+            stroke(this.color);
+          }
+          box(this.width, this.height, this.height);
+          pop();
+        }
+      }
+
+    </script>
+
+  </body>
+      
+  <canvas id="myCanvas"></canvas>
+</html>

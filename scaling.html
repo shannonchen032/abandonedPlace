@@ -1,0 +1,258 @@
+<html>
+    <head>
+        <style>
+        html{
+            overflow-y: hidden;
+            overflow-y: hidden;
+            background: url(./images/background\ copy.png);
+            background-repeat: no-repeat;
+            background-size: 100%;         
+        }
+
+        body{
+            margin-left: -2%;
+            /* margin-top: 5%; */
+        }
+
+
+        .decreaseButton {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #ffffff;
+            margin-top: 15%;
+            z-index: 100  !important;
+            margin-left: -5%;
+        }
+        
+
+        .buttonImage {
+            width: 45%;
+            opacity: 1;
+            z-index: 100  !important;
+            filter:drop-shadow(3px 3px 5px #489930);     
+        }
+        
+        .buttonText {
+            position: relative;
+            margin-left: -32%;
+            font-family: Millweemanuscripting !important;
+            text-shadow: 2px 2px #489930 !important;
+            font-size: 2em !important;
+            color: white;
+            z-index: 200 !important;
+            font-weight: bolder !important;
+        }
+
+        .decreaseButton:hover {
+            transform: translate(2px, 2px) !important;
+            cursor: pointer !important;
+        }
+
+        .rightImage {
+            height: 160%;
+            position:absolute;
+            filter:drop-shadow(3px 3px 5px rgba(69, 69, 69, 0.354));     
+            z-index: 100 !important; 
+        }
+
+        .mainContainer{
+            position:absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            padding: 2%;
+            text-align: center;
+        }
+
+        </style>
+    </head>
+    <body>
+        <div class="leftContainer">
+            <img src="./images/left.png" class="rightImage" 
+            style="margin-left:2%; margin-top: 30%; z-index: -1; height: 80% !important;">
+        </div>
+
+        <div class="mainContainer">
+            <button class="decreaseButton">
+                <a href="./cityBirdsEye.html"><img src="./images/seenEnough.png" alt="Enter" class="buttonImage"></a>
+            </button>
+        </div>
+
+
+        <div class="rightContainer">
+            <img src="./images/right.png" class="rightImage" 
+            style="margin-left: 91%; margin-top: 5%; z-index: 10;">
+        </div>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+        <script>
+            let vineSpacing = 15; // Space between vines
+            let vineCount = 350; // Number of vines to generate
+            let minVineHeight = 10; // Minimum height of each vine
+            let maxVineHeight = 30; // Maximum height of each vine
+
+            function setup() {
+                createCanvas(windowWidth + 30, windowHeight + 80);
+
+                // // Draw the gradient background120,123,126
+                // let from = color(255,89,79); // sunset orange 255,89,79
+                // // let to = color(213,210,208); // muted yellow
+                // let to = color(156,176,113); // muted yellow
+                // for (let y = 0; y < height; y++) {
+                //     let inter = map(y, 0, height, 0, 1);
+                //     let c = lerpColor(from, to, inter);
+                //     stroke(c);
+                //     line(0, y, width, y);
+                // }
+
+                strokeWeight(3);
+                noFill();
+                generateVines();
+            }
+
+            function generateVines() {
+                let x = random(0, width); // Starting x position of each vine
+
+                for (let i = 0; i < vineCount; i++) {
+                    let vineHeight = random(minVineHeight, maxVineHeight);
+
+                    // Draw the vine
+                    beginShape();
+                    vertex(x, 0);
+
+                    for (let j = 0; j < 20; j++) {
+                        let y = j * vineSpacing + vineHeight/2;
+                        if (j % 2 === 0) {
+                            curveVertex(x - 25, y);
+                            let colorVal = color(random(63, 80), random(150, 200), random(30, 70));
+                            stroke(colorVal);
+                            strokeWeight(random(0, 0) - j * 0.2); // Randomize stroke weight
+                            fill(colorVal); // Add fill color for ellipses
+                            let size = random(5, 25) - j * random(0.25, 0.5);
+                            ellipse(x, y, size);
+                            noFill(); // Remove fill color for curveVertex
+                        } else {
+                            curveVertex(x + 25, y);
+                            let colorVal = color(random(30, 70), random(150, 200), random(30, 70));
+                            stroke(colorVal);
+                            strokeWeight(random(1, 4) - j * 0.1); // Randomize stroke weight
+                            fill(colorVal); // Add fill color for ellipses
+                            let size = random(2, 15) - j * random(0.1, 0.25);
+                            ellipse(x, y, size);
+                            noFill(); // Remove fill color for curveVertex
+                        }
+                    }
+
+                    vertex(x, vineHeight);
+                    endShape();
+
+                    // Update x position for the next vine
+                    x += random(-width/1.5, width/1.5); // Randomize x position
+                    x = constrain(x, 0, width); // Constrain x position within canvas bounds
+                }
+            }
+
+            let frameCount = 0;
+
+   //////// CITY SCAPE //////////
+
+            let buildingInterval = 100; // Set the interval between buildings
+            let lastBuildingFrame = -buildingInterval; // Keep track of the last frame a building was created
+
+            function draw() {
+            // Increment frame count
+            frameCount++;
+
+            // Increase frame rate every 100 frames
+            if (frameCount % 8000 == 0) {
+                let newFrameRate = frameRate() + 0; // Increase frame rate by 5
+                frameRate(newFrameRate); // Set the new frame rate
+            }
+
+            // Draw the skyline
+            drawSkyline(width / 2, height / 2, 200, 5, 50, 100);
+
+            // Draw the buildings
+            for (let i = 0; i < 10; i++) {
+                let x = random(width);
+                let y = random(height / 2, height);
+                let w = random(30, 60);
+                let h = random(100, 400);
+                let colors = [
+                    // [69, 207, 161], // muted neon green
+                    [60,73,48], // muted neon blue
+                    [38,44,28], // muted neon orange
+                    [61,66,53], // muted neon yellow   
+                    // [161, 149, 224] // muted neon purple
+                    ];
+                    let randomColor = colors[floor(random(0, colors.length))];
+                    r = random(randomColor[0] - 1, randomColor[0] + 2);
+                    g = random(randomColor[1] - 1, randomColor[1] + 2);
+                    b = random(randomColor[2] - 1, randomColor[2] + 2);
+                    c = color(r, g, b);
+
+                drawBuilding(x, y, w, h, c);
+            }
+            }
+
+
+            function drawSkyline(x, y, size, count, minHeight, maxHeight) {
+                push();
+                translate(x, y);
+
+                let gap = size / count;
+
+                for (let i = 0; i < count; i++) {
+                    let height = random(minHeight, maxHeight);
+                    let x1 = i * gap - size / 2;
+                    let x2 = (i + 1) * gap - size / 2;
+                    let y1 = -height / 2;
+                    let y2 = height / 2;
+
+                    noStroke;
+                    line(x1, y1, x1, y2);
+                    line(x2, y1, x2, y2);
+
+                    noStroke;
+                    line(x1, y1, x2, y1);
+                        line(x1, y2, x2, y2);
+                    }
+
+                    pop();
+            }
+
+                function drawBuilding(x, y, w, h, c) {
+                    push();
+                    translate(x, y);
+
+                    // Remove stroke for the building
+                    noStroke();
+
+                    // Draw the main part of the building
+                    fill(c);
+                    rect(0, -h / 2, w, h);
+
+                    // Draw the windows
+                    fill(255, 255, 255, 100);
+                    let windowSize = 20;
+                    let windowGap = 30;
+                    let windowCount = floor(h / windowGap) - 1;
+                    let windowX = w / 2 - windowSize / 2;
+
+                    for (let i = 0; i < windowCount; i++) {
+                        let windowY = -h / 2 + windowGap * (i + 1);
+
+                        rect(windowX, windowY, windowSize, windowSize);
+                        rect(-windowX - windowSize, windowY, windowSize, windowSize);
+                    }
+
+                    pop();
+                }
+        </script>
+    </body>
+</html>

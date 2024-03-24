@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>Abstract Cityscape</title>
+      <style>
+        html{
+          overflow-y: hidden !important;
+          overflow-y: hidden !important;
+          background-color: #cacccd !important;
+        }
+
+        body{
+            overflow-y: hidden !important;
+            overflow-y: hidden !important;
+        }
+
+        .topImage {
+            width: 45%;
+            position:absolute;
+            filter:drop-shadow(3px 3px 0px rgba(69, 69, 69, 0.354));      
+        }
+
+
+        .rightImage {
+            height: 150%;
+            position:absolute;
+            filter:drop-shadow(3px 3px 5px rgba(69, 69, 69, 0.354));      
+        }
+
+        .mainContainer{
+            position:absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            padding: 2%;
+            text-align: center;
+        }
+
+        .topRight {
+			width: 120%;
+			position: absolute;
+            margin-top: 13%;
+			margin-left: 60%;
+			transform: translateX(-50%);
+			animation-name: easeIn;
+			animation-duration: 2s;
+			animation-timing-function: ease-out;
+			animation-fill-mode: forwards;
+            filter:drop-shadow(0px 0px 10px #a2a0a23e);      
+		}
+
+        .bottomLeft {
+			width: 100%;
+			position: absolute;
+			margin-top: 50%;
+			margin-left: 30%;
+			transform: translateX(-50%);
+			animation-name: easeInBL;
+			animation-duration: 2s;
+			animation-timing-function: ease-out;
+			animation-fill-mode: forwards;
+            filter:drop-shadow(0px 0px 8px #a2a0a290);      
+
+		}
+
+        .bottomRight {
+			width: 65%;
+			/* background-color: red; */
+			position: absolute;
+			margin-top: 45%;
+			margin-left: 105%;
+			transform: translateX(-50%);
+			animation-name: easeInBM;
+			animation-duration: 2s;
+			animation-timing-function: ease-out;
+			animation-fill-mode: forwards;
+            z-index: 100;
+            filter:drop-shadow(20px 10px 30px #a2a0a2d0);      
+		}
+
+		@keyframes easeIn {
+			from {
+				top: calc(50% - 600px);
+			}
+
+            to {
+				top: -500px;
+			}
+		}
+
+
+		@keyframes easeInBL {
+			to {
+				top: 500px;
+			}
+			from {
+				top: calc(50% - 600px);
+			}
+		}
+
+        @keyframes easeInBM {
+			to {
+				top: 500px;
+			}
+			from {
+				top: calc(50% - 660px);
+			}
+		}
+
+        a{
+            text-decoration: none !important;
+        }
+
+        a:hover{
+            cursor: pointer;
+            text-shadow: 2px 2px #c6a559;
+        }
+
+        .decreaseButton {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            width: 50%;
+            margin-left: 25%;
+        }
+        
+        .buttonImage {
+            width: 35%;
+            opacity: .8;
+            filter: drop-shadow(3px rgba(255, 255, 255, 0.469));
+            margin-top: 10%;
+            margin-bottom: -5%;
+        }
+
+        #submission{
+            margin-bottom: 5%;
+            width: 200%;
+            position: fixed;
+            border-radius: 5px;
+            border: 1px solid #cacccd;
+            background-color: #cacccd;
+            font-size: 1.5em;
+            font-family: Millweemanuscripting;
+            color: #c6a559;
+            font-style: italic;
+            margin-left:-93%;
+            display: inline-block;
+            text-align: center;
+            text-transform: uppercase;
+            font-style: italic;
+            text-align: center;
+        }
+
+        input:focus {
+            outline:none;
+        }
+
+      </style>
+    </head>
+    
+  <body>
+        <div class="topContainer">
+            <img src="./images/hello.png" class="topImage" 
+            style="width: 100%; margin-top: -3%;">
+            <button class="decreaseButton">
+                <img src="./images/enterButton.png" alt="Enter" class="buttonImage">
+            </button>
+        </div>
+
+
+        <div class="topRight">
+            <img src="./images/topRight.png" class="topImage">
+            <div>
+                <a href="./indexTwo.html"><p style="width: 15%; padding: 8%; color: #cacccd; font-size: 30px; 
+                z-index: 100 !important;transform: rotate(125deg);
+                margin-left: 0%; text-decoration: none !important;">what now?</p></a>
+            </div>
+        </div>
+
+        <div class="mainContainer">
+            <p id="typewriter" 
+            style="color: black; font-size: 2em; font-weight: bolders; font-family: Millweemanuscripting !important;"></p>
+            <input type="text" id="submission" placeholder="Enter your piece here &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
+                <br><br><br>
+            <a href="./closed.html" style="margin-top: 50% !important;">
+                <span style="color: black; font-size: 2em; font-weight: bolders; font-family: Millweemanuscripting;">
+                SUBMIT  ▶</span></a>
+        </div>
+    
+        <div class="bottomLeft">
+            <img src="./images/bottomLeft.png" class="topImage">
+            <div>
+                <a href="./indexTwo.html"><p style="width: 15%; padding: 9%; color: #cacccd; 
+                font-size: 30px; z-index: 100 !important;transform: rotate(7deg);
+                margin-left: 23%; text-decoration: none !important;"> what happened?</p></a>
+            </div>
+        </div>
+    
+        <div>
+            <img src="./images/left.png" class="rightImage" 
+            style="margin-left:-2%; margin-top: 15%; z-index: -1;">
+        </div>
+
+        
+        <div class="bottomRight">
+            <img src="./images/bottomRight copy.png" class="topImage">
+            <div>
+                <a href="./indexTwo.html"><p style="width: 20%; color: #cacccd; 
+                    font-size: 30px; z-index: 100 !important;transform: rotate(-45deg);
+                    margin-left: 10%; margin-top: 35%;">where we go</p></a>
+            </div>
+        </div>
+    
+        <div>
+            <img src="./images/right.png" class="rightImage" 
+            style="margin-left:90%; margin-top: 10%; z-index: 10;">
+        </div>
+
+    <script>
+        const text = "So what would you do with an abandoned space?";
+        const delay = 80; // delay between each letter in milliseconds
+        let i = 0;
+
+        const typewriter = setInterval(function() {
+            document.getElementById("typewriter").innerHTML += text.charAt(i);
+            i++;
+            if (i > text.length) {
+            clearInterval(typewriter);
+            }
+        }, delay);
+        const img = document.querySelector(".topImage");
+        img.addEventListener("load", () => {
+          img.style.opacity = 0;
+          animateIn();
+        });
+
+        function animateIn() {
+            const img = document.querySelector(".topImage");
+            const animation = img.animate(
+                [{ opacity: 1 }, { opacity: 0}], // animate opacity from 0 to 1
+                { duration: 8000, easing: "ease-out" }
+            );
+            animation.addEventListener("finish", () => {
+                img.style.opacity = 0;
+            });
+        }
+
+        const fade = document.querySelector(".rightImage");
+        fade.addEventListener("load", () => {
+          fade.style.opacity = 0;
+          animate();
+        });
+
+        function animate() {
+            const fade = document.querySelector(".rightImage");
+            const animation = fade.animate(
+                [{ opacity: 1 }, { opacity: 0}], // animate opacity from 0 to 1
+                { duration: 8000, easing: "ease-out" }
+            );
+            animation.addEventListener("finish", () => {
+                fade.style.opacity = 0;
+            });
+        }
+      </script>
+  </body>
+</html>

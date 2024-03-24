@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>Abstract Cityscape</title>
+      <style>
+        html{
+          overflow-y: hidden;
+          overflow-y: hidden;
+          background-color: #0a0a0a;
+        }
+
+        body{
+            line-height: 2em;
+        }
+
+        .topImage {
+            width: 50%;
+            position:absolute;
+            filter:drop-shadow(3px 3px 0px rgba(69, 69, 69, 0.354));      
+        }
+
+
+        .rightImage {
+            height: 150%;
+            position:absolute;
+            filter:drop-shadow(3px 3px 5px rgba(69, 69, 69, 0.354));      
+        }
+
+        .mainContainer{
+            position:absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            padding: 2%;
+            text-align: center;
+        }
+
+        .topRight {
+			width: 120%;
+			position: absolute;
+            margin-top: 13%;
+			margin-left: 60%;
+			transform: translateX(-50%);
+			animation-name: easeIn;
+			animation-duration: 5s;
+			animation-timing-function: ease-out;
+			animation-fill-mode: forwards;
+            filter:drop-shadow(0px 0px 10px #a2a0a23e);      
+		}
+
+        .bottomLeft {
+			width: 100%;
+			position: absolute;
+			margin-top: 50%;
+			margin-left: 30%;
+			transform: translateX(-50%);
+			animation-name: easeInBL;
+			animation-duration: 5s;
+			animation-timing-function: ease-out;
+			animation-fill-mode: forwards;
+            filter:drop-shadow(0px 0px 8px #a2a0a290);      
+
+		}
+
+        .bottomRight {
+			width: 65%;
+			position: absolute;
+			margin-top: 45%;
+			margin-left: 105%;
+			transform: translateX(-50%);
+			animation-name: easeInBM;
+			animation-duration: 5s;
+			animation-timing-function: ease-out;
+			animation-fill-mode: forwards;
+            z-index: 100;
+            filter:drop-shadow(20px 10px 30px #a2a0a2d0);      
+		}
+
+		@keyframes easeIn {
+			from {
+				top: -500px;
+			}
+			to {
+				top: calc(50% - 600px);
+			}
+		}
+
+
+		@keyframes easeInBL {
+			from {
+				top: 500px;
+			}
+			to {
+				top: calc(50% - 600px);
+			}
+		}
+
+        @keyframes easeInBM {
+			from {
+				top: 500px;
+			}
+			to {
+				top: calc(50% - 660px);
+			}
+		}
+
+        p{
+            font-family: Millweemanuscripting !important;
+            text-shadow: 2px 2px #0a0a0a !important;
+            font-size: 2em !important;
+            line-height: 1em;
+        }
+
+        p:hover{
+            cursor: pointer !important;
+        }
+
+        a{
+            text-decoration: none !important;
+        }
+
+        .decreaseButton {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .buttonImage {
+            width: 35%;
+            opacity: .8;
+            filter: drop-shadow(3px rgba(255, 255, 255, 0.469));
+            margin-top: 10%;
+            margin-bottom: -5%;
+        }
+
+        img{
+            opacity: .8 !important;
+        }
+
+        #myButton {
+            display: none;
+        }
+
+        button:hover{
+            cursor: pointer !important;
+            text-shadow: 2px 2px #87807a  !important;
+        }
+        
+      </style>
+    </head>
+    
+  <body>
+        <div class="topContainer">
+            <img src="./images/test.png" class="topImage" style="margin-left:55%; margin-top: -3%;">
+        </div>
+
+        <div class="mainContainer">
+            <p id="typewriter" 
+            style="color: #cacccd; font-size: 24px; line-height: 1.2em !important;"></p>
+            <button id="myButton" onclick="location.href='./scaling.html'"
+            style="background-color: transparent; border: none;
+            cursor: pointer; margin-left: 45%;">
+            <span style="text-align: center; color: white; font-size: 2em;">▶▶</span></button>
+        </div>
+
+        <div class="leftContainer">
+            <img src="./images/left.png" class="rightImage" 
+            style="margin-left:0%; margin-top: 20%; z-index: -1;">
+        </div>
+    
+    
+        <div class="rightContainer">
+            <img src="./images/right.png" class="rightImage" 
+            style="margin-left:85%; margin-top: 10%; z-index: 10;">
+        </div>
+
+    <script>
+        const text = "I know you're getting impatient. Does this place even exist? Where is it? You are probably just asking the wrong questions.";
+        const delay = 60; // delay between each letter in milliseconds
+        let i = 0;
+
+        const typewriter = setInterval(function() {
+            document.getElementById("typewriter").innerHTML += text.charAt(i);
+            i++;
+            if (i > text.length) {
+            clearInterval(typewriter);
+            showButton();
+            }
+        }, delay);
+
+        function showButton() {
+            const button = document.getElementById("myButton");
+            button.style.display = "block";
+        }
+        
+        const img = document.querySelector(".topImage");
+        img.addEventListener("load", () => {
+          img.style.opacity = 1;
+          animateIn();
+        });
+
+        function animateIn() {
+            const img = document.querySelector(".topImage");
+            const animation = img.animate(
+                [{ opacity: 0 }, { opacity: .8}], // animate opacity from 0 to 1
+                { duration: 8000, easing: "ease-out" }
+            );
+            animation.addEventListener("finish", () => {
+                img.style.opacity = 1;
+            });
+        }
+
+        const fade = document.querySelector(".rightImage");
+        fade.addEventListener("load", () => {
+          fade.style.opacity = 1;
+          animate();
+        });
+
+        function animate() {
+            const fade = document.querySelector(".rightImage");
+            const animation = fade.animate(
+                [{ opacity: 0 }, { opacity: .8}], // animate opacity from 0 to 1
+                { duration: 8000, easing: "ease-out" }
+            );
+            animation.addEventListener("finish", () => {
+                fade.style.opacity = 1;
+            });
+        }
+
+      </script>
+  </body>
+</html>
